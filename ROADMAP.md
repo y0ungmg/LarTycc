@@ -10,7 +10,7 @@ phase's exit criteria are demonstrably green.
 - [x] minimal builds/tests and independent CI jobs
 - [x] versioned command and project schema examples
 - [x] Apache-2.0 license, third-party policy, security/contribution guides
-- [ ] merge the Phase 0 pull request and confirm CI on GitHub runners
+- [x] merge the Phase 0 pull request and confirm CI on GitHub runners
 
 Exit: clean checkout builds; all tests/lints pass; CI is green on Linux and the
 C++ smoke build is green on Windows; README, architecture, and roadmap match the
@@ -56,4 +56,3 @@ installers, migration/fuzz campaigns, telemetry opt-in, and beta documentation.
 Later research: custom synthesizer, macOS, collaboration, vocal/pitch tools,
 plugin SDK, marketplace, remote inference, and text-to-audio. They have no
 commitment until core production reliability is proven.
-
