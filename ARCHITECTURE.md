@@ -61,6 +61,21 @@ IPC add contract work, but ownership and failure domains stay understandable.
 | TypeScript | views, interactions, accessibility, visualization | authoritative state or direct DSP control |
 | Python | offline ingestion, training, evaluation, export | shipped callback or project mutation |
 
+These four toolchains form the default product build. C is permitted inside
+reviewed DSP/device dependencies but is not a separate application owner. All
+other languages are optional, experimental, research, service, or infrastructure
+lanes and must satisfy an entry gate before their first implementation. The
+complete ownership and prohibition map is in
+[docs/LANGUAGE_MATRIX.md](docs/LANGUAGE_MATRIX.md).
+
+**DECISION** — A language is admitted for a capability, never for language-count
+or novelty. The default build must not require an incubation toolchain.
+**WHY** — specialist languages can improve DSP authoring, constraint solving, or
+service supervision without turning the workstation into an unreproducible
+polyglot monolith. **TRADE-OFFS** — each admitted boundary adds maintenance,
+licensing, packaging, protocol, and security cost, so unused scaffolds are not
+created.
+
 **DECISION** — Every mutation is a Rust command. **WHY** — manual UI, shortcuts,
 automation, and AI then share validation, permissions, audit, and undo.
 **ALTERNATIVES** — per-client mutations or shared mutable objects.
@@ -84,17 +99,19 @@ sequenceDiagram
   Queue->>DSP: consume at block boundary
 ```
 
-UI transport is local, typed, request/response IPC. A desktop-host spike will
-choose between Tauri commands, local domain sockets, and an embedded webview
-bridge. Protobuf defines cross-process contracts; in-process calls may use
-native Rust types. UI messages include a request ID and expected project
+UI transport is local, typed, request/response IPC. The embedded host protocol
+uses versioned JSON envelopes because JavaScript and Rust both validate that
+representation directly; the same router can run as newline-delimited JSON over
+stdio during development. Protobuf remains the contract for worker processes
+and future services. UI messages include a request ID and expected project
 revision. Stale writes receive a conflict rather than silent last-write-wins.
 
-**DECISION** — Protobuf for process boundaries; a narrow versioned C ABI for
-Rust↔C++ engine control. **WHY** — generated IPC contracts and stable FFI avoid
+**DECISION** — JSON Schema for the webview host boundary, Protobuf for service
+and worker boundaries, and a narrow versioned C ABI for Rust↔C++ engine control.
+**WHY** — each representation matches its transport while stable FFI avoids
 exposing C++ ABI details. **ALTERNATIVES** — JSON everywhere, CXX/cbindgen,
-Cap'n Proto. **TRADE-OFFS** — schema generation and explicit compatibility
-rules, in exchange for language-neutral tooling and forward evolution.
+Cap'n Proto. **TRADE-OFFS** — multiple explicit schemas, in exchange for natural
+web integration, language-neutral services, and forward evolution.
 
 ## 4. Real-time audio flow
 
@@ -307,6 +324,7 @@ machines will replace estimates before any model release.
 LarTycc/
 ├── apps/desktop/       # native host
 ├── core/               # Rust project/command core
+├── audio-bridge/       # safe Rust wrapper over the native C ABI
 ├── audio-engine/       # C++20 realtime DSP
 ├── ui/                 # React/TypeScript
 ├── ai/                 # Python offline ML
@@ -318,6 +336,11 @@ LarTycc/
 ├── scripts/            # developer automation
 ├── tests/              # integration and e2e
 ├── docs/               # focused design notes
+```
+
+Future language-specific roots listed in `docs/LANGUAGE_MATRIX.md` are reserved
+names, not current components. A directory appears only when its roadmap entry
+gate, owner, ADR, license review, protocol, and independent CI check all exist.
 └── .github/workflows/  # CI
 ```
 
@@ -343,4 +366,3 @@ text-to-audio, custom synthesizer, mastering assistant, remote inference, and
 training a large foundation model are outside Phase 0. JUCE is only evaluated:
 it accelerates devices, MIDI, plugins, and cross-platform UI, but AGPL/commercial
 licensing, binary size, and framework coupling require a written decision first.
-

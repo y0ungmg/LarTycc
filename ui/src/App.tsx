@@ -8,11 +8,13 @@ const initialTransport: TransportSnapshot = { playing: false, positionFrames: 0,
 export function App({ host: injectedHost }: { host?: HostBridge }) {
   const host = useMemo(() => injectedHost ?? createHostBridge(), [injectedHost]);
   const [transport, setTransport] = useState(initialTransport);
+  const [tempo, setTempo] = useState(120);
   const [devices, setDevices] = useState<AudioDevice[]>([]);
   const [deviceId, setDeviceId] = useState("");
 
   useEffect(() => {
     const unsubscribe = host.subscribeTransport(setTransport);
+    void host.getState().then((state) => setTempo(state.project.tempo));
     void host.listDevices().then((items) => {
       setDevices(items);
       setDeviceId(items.find((item) => item.isDefault)?.id ?? items[0]?.id ?? "");
@@ -29,7 +31,7 @@ export function App({ host: injectedHost }: { host?: HostBridge }) {
         <div className="transport" aria-label="Transport controls">
           <button className={transport.playing ? "active" : ""} onClick={() => void host.send({ type: "transport.play", deviceId })} aria-label="Play">▶</button>
           <button onClick={() => void host.send({ type: "transport.stop" })} aria-label="Stop">■</button>
-          <strong>145 <small>BPM</small></strong>
+          <strong>{tempo} <small>BPM</small></strong>
         </div>
         <select aria-label="Audio output" value={deviceId} onChange={(event) => setDeviceId(event.target.value)}>
           {devices.length === 0 && <option value="">No audio device</option>}

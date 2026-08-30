@@ -1,8 +1,9 @@
 use lartycc_audio_bridge::AudioHost;
 use lartycc_core::{Command, Project, ProjectSession};
+use lartycc_desktop::HostRouter;
 use std::error::Error;
 use std::f32::consts::TAU;
-use std::io;
+use std::io::{self, BufRead, Write};
 use std::path::Path;
 use std::time::Duration;
 
@@ -11,10 +12,27 @@ fn main() -> Result<(), Box<dyn Error>> {
     match arguments.next().as_deref() {
         Some("--list-devices") => list_devices(),
         Some("--play-test") => play_test(arguments.next().as_deref()),
+        Some("--host-stdio") => run_host_stdio(
+            arguments
+                .next()
+                .as_deref()
+                .map_or_else(|| Path::new("LarTycc-demo.json"), Path::new),
+        ),
         Some(path) if !path.starts_with('-') => open_project(Path::new(path)),
         None => open_project(Path::new("LarTycc-demo.json")),
         Some(option) => Err(io::Error::other(format!("unknown option: {option}")).into()),
     }
+}
+
+fn run_host_stdio(path: &Path) -> Result<(), Box<dyn Error>> {
+    let mut router = HostRouter::open(path)?;
+    let stdin = io::stdin();
+    let mut stdout = io::stdout().lock();
+    for line in stdin.lock().lines() {
+        writeln!(stdout, "{}", router.invoke_json(&line?))?;
+        stdout.flush()?;
+    }
+    Ok(())
 }
 
 fn list_devices() -> Result<(), Box<dyn Error>> {

@@ -52,7 +52,7 @@ trade-offs are in [ARCHITECTURE.md](ARCHITECTURE.md). AI details are in
 | `ai/` | dataset, training, and evaluation tooling | Python |
 | `proto/` | versioned cross-process message contracts | Protobuf |
 | `shared/schemas/` | persisted interchange schemas | JSON Schema |
-| `apps/desktop/` | native host entry point and packaging | Rust |
+| `apps/desktop/` | native host, versioned command router, packaging | Rust |
 
 ## Getting started
 
@@ -86,7 +86,15 @@ test tone through the default or selected device:
 ```bash
 cargo run -p lartycc-desktop -- --list-devices
 cargo run -p lartycc-desktop -- --play-test [device-id]
+printf '%s\n' '{"version":1,"id":"state","command":"host.getState"}' \
+  | cargo run -p lartycc-desktop -- --host-stdio demo-project.json
 ```
+
+The host protocol is defined by
+[`shared/schemas/host-protocol-v1.schema.json`](shared/schemas/host-protocol-v1.schema.json).
+The current and proposed language ownership map is documented in
+[`docs/LANGUAGE_MATRIX.md`](docs/LANGUAGE_MATRIX.md); incubation languages are
+not part of the default build.
 
 ## Screenshots
 
