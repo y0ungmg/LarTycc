@@ -12,6 +12,7 @@ recorded here and pass the compatibility review described in CONTRIBUTING.md.
 | Rust crates | See Cargo.lock when generated | Per crate | No | Audit before each release. |
 | Python packages | See lockfile when generated | Per package | No | Training-only packages are not shipped in the app. |
 | miniaudio | 0.11.25 (`9634bed`) | MIT No Attribution | Built from pinned source | Device I/O only; selected from the upstream dual-license terms. |
+| `cmake`, `cc`, `find-msvc-tools`, `shlex` Rust crates | Versions pinned in `Cargo.lock` | MIT OR Apache-2.0 | Build-time only | Compile and link the native audio bridge; not shipped as runtime libraries. |
 
 No dataset, pretrained model, audio sample, or third-party asset is bundled in
 Phase 0. A source being publicly downloadable does **not** make it suitable for

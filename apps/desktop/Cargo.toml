@@ -10,8 +10,8 @@ name = "lartycc"
 path = "src/main.rs"
 
 [dependencies]
+lartycc-audio-bridge = { path = "../../audio-bridge" }
 lartycc-core = { path = "../../core" }
 
 [lints]
 workspace = true
-
