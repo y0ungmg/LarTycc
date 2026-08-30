@@ -1,5 +1,5 @@
 [workspace]
-members = ["core", "ai-runtime", "apps/desktop"]
+members = ["core", "ai-runtime", "audio-bridge", "apps/desktop"]
 resolver = "2"
 
 [workspace.package]
@@ -9,7 +9,7 @@ license = "Apache-2.0"
 rust-version = "1.81"
 
 [workspace.lints.rust]
-unsafe_code = "forbid"
+unsafe_code = "deny"
 
 [workspace.lints.clippy]
 all = "deny"

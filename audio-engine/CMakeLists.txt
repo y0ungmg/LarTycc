@@ -49,6 +49,18 @@ else()
   target_compile_options(lartycc_audio_device PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 
+add_library(lartycc_audio_c STATIC src/audio_host_c.cpp)
+add_library(LarTycc::AudioC ALIAS lartycc_audio_c)
+target_include_directories(lartycc_audio_c PUBLIC include)
+target_compile_features(lartycc_audio_c PUBLIC cxx_std_20)
+target_link_libraries(lartycc_audio_c PUBLIC LarTycc::AudioDevice)
+set_target_properties(lartycc_audio_c PROPERTIES CXX_EXTENSIONS OFF)
+if(MSVC)
+  target_compile_options(lartycc_audio_c PRIVATE /W4 /permissive-)
+else()
+  target_compile_options(lartycc_audio_c PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
 add_executable(lartycc_render_demo tools/render_demo.cpp)
 target_link_libraries(lartycc_render_demo PRIVATE LarTycc::Audio)
 
@@ -62,4 +74,13 @@ if(LARTYCC_BUILD_TESTS)
   add_executable(audio_device_tests tests/audio_device_test.cpp)
   target_link_libraries(audio_device_tests PRIVATE LarTycc::AudioDevice)
   add_test(NAME audio_device_tests COMMAND audio_device_tests)
+  add_executable(audio_host_c_tests tests/audio_host_c_test.cpp)
+  target_link_libraries(audio_host_c_tests PRIVATE LarTycc::AudioC)
+  add_test(NAME audio_host_c_tests COMMAND audio_host_c_tests)
 endif()
+
+install(TARGETS lartycc_audio lartycc_audio_device lartycc_audio_c miniaudio
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin)
+install(DIRECTORY include/ DESTINATION include)

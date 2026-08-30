@@ -28,7 +28,8 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [x] minimal native project host and Easy timeline prototype
 - [x] ALSA and WASAPI device adapters with stable device selection IDs
 - [x] typed React host bridge, transport snapshots, and browser preview sync
-- [ ] inject the native bridge and connect Rust project commands to C++ transport
+- [x] safe Rust-to-C++ audio bridge and native device test mode
+- [ ] inject the React bridge into the desktop webview and route project commands
 - [ ] measured underrun/latency suite on reference PCs
 
 Exit: open a project, play a sample without callback allocations, edit/save,

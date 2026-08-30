@@ -11,8 +11,9 @@ a chat panel glued to a sequencer: it proposes validated project commands,
 shows an audible/visual preview, and only mutates the project after approval.
 Every applied proposal participates in the same undo/redo history as manual UI
 edits. The repository is in **pre-alpha Phase 1**. A headless engine can render
-a sample through the master path; WASAPI/ALSA device output and a typed React
-bridge now exist, while native bridge injection is the next integration seam.
+a sample through the master path; WASAPI/ALSA output, a stable Rust-to-C++ audio
+bridge, and a typed React bridge now exist. Desktop webview injection is the
+next integration seam.
 
 ## Product principles
 
@@ -44,13 +45,14 @@ trade-offs are in [ARCHITECTURE.md](ARCHITECTURE.md). AI details are in
 | Path | Responsibility | Language |
 | --- | --- | --- |
 | `audio-engine/` | real-time graph and DSP boundary | C++20 |
+| `audio-bridge/` | safe Rust wrapper over the stable C audio ABI | Rust/C ABI |
 | `core/` | project state, commands, undo, jobs | Rust |
 | `ai-runtime/` | local model loading and inference adapter | Rust |
 | `ui/` | Easy/Pro interface | React + TypeScript |
 | `ai/` | dataset, training, and evaluation tooling | Python |
 | `proto/` | versioned cross-process message contracts | Protobuf |
 | `shared/schemas/` | persisted interchange schemas | JSON Schema |
-| `apps/desktop/` | future native host and packaging | undecided |
+| `apps/desktop/` | native host entry point and packaging | Rust |
 
 ## Getting started
 
@@ -77,8 +79,14 @@ npm test
 npm run build
 ```
 
-Run every Phase 0 check with `bash scripts/check.sh` after dependencies are
-installed. The desktop host is intentionally not runnable yet.
+Run every repository check with `bash scripts/check.sh` after dependencies are
+installed. The native host can inspect playback devices or play a one-second
+test tone through the default or selected device:
+
+```bash
+cargo run -p lartycc-desktop -- --list-devices
+cargo run -p lartycc-desktop -- --play-test [device-id]
+```
 
 ## Screenshots
 
@@ -88,9 +96,10 @@ mockup is presented as a working product.
 ## Status and scope
 
 Phase 0 is complete. Phase 1 currently provides project persistence, undo/redo,
-autosave, waveform reduction, a transport/sample engine, offline WAV demo, and
-Easy timeline prototype. Hardware audio, inference, plugins, model training,
-pitch correction, and collaboration remain deferred. See
+autosave, waveform reduction, a transport/sample engine, offline WAV demo,
+native playback bridge, and Easy timeline prototype. Hardware latency
+qualification, inference, plugins, model training, pitch correction, and
+collaboration remain deferred. See
 [ROADMAP.md](ROADMAP.md) for gates and [CONTRIBUTING.md](CONTRIBUTING.md) before
 opening a pull request.
 
