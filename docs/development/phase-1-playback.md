@@ -19,6 +19,11 @@ The desktop command creates or opens a validated project, adds the first audio
 track through the command system, and saves with a sibling temporary file. The
 React Easy timeline is the presentation prototype for the same state.
 
-This is intentionally a **headless playback slice**. A real ALSA/WASAPI device
-adapter and the typed IPC binding between the native host and React remain Phase
-1 work. The project does not claim audible hardware playback yet.
+`AudioOutput` now enumerates stable device IDs and drives the engine callback
+through WASAPI on Windows or ALSA on Linux. The null backend keeps headless CI
+deterministic. The React `HostBridge` consumes typed device and transport
+snapshots and falls back to an explicit browser preview implementation.
+
+Native bridge injection and Rust project-command routing into the C++ transport
+remain Phase 1 work. Hardware availability and low-latency behavior must still
+be measured on reference PCs before the full Phase 1 gate can close.
