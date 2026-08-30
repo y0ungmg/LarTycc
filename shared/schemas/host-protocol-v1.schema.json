@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lartycc.dev/schemas/host-protocol-v1.schema.json",
+  "title": "LarTycc native host protocol v1",
+  "oneOf": [
+    { "$ref": "#/$defs/request" },
+    { "$ref": "#/$defs/success" },
+    { "$ref": "#/$defs/failure" }
+  ],
+  "$defs": {
+    "request": {
+      "type": "object",
+      "required": ["version", "id", "command"],
+      "properties": {
+        "version": { "const": 1 },
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "command": {
+          "enum": [
+            "host.getState",
+            "audio.listDevices",
+            "audio.loadTestTone",
+            "transport.play",
+            "transport.stop",
+            "transport.seek",
+            "project.setTempo",
+            "project.createTrack",
+            "project.undo",
+            "project.redo",
+            "project.save"
+          ]
+        },
+        "payload": {},
+        "expectedProjectRevision": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "success": {
+      "type": "object",
+      "required": ["version", "id", "ok", "result"],
+      "properties": {
+        "version": { "const": 1 },
+        "id": { "type": "string" },
+        "ok": { "const": true },
+        "result": {}
+      },
+      "additionalProperties": false
+    },
+    "failure": {
+      "type": "object",
+      "required": ["version", "id", "ok", "error"],
+      "properties": {
+        "version": { "const": 1 },
+        "id": { "type": "string" },
+        "ok": { "const": false },
+        "error": {
+          "type": "object",
+          "required": ["code", "message"],
+          "properties": {
+            "code": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+            "message": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -10,6 +10,8 @@ cmake --build build/cpp --parallel
 cargo run -p lartycc-desktop -- demo-project.json
 cargo run -p lartycc-desktop -- --list-devices
 cargo run -p lartycc-desktop -- --play-test [device-id]
+printf '%s\n' '{"version":1,"id":"state","command":"host.getState"}' \
+  | cargo run -p lartycc-desktop -- --host-stdio demo-project.json
 ```
 
 The renderer creates `lartycc-demo.wav`: one second of a generated mono sample
@@ -36,6 +38,12 @@ Supplying an ID selects that exact device; omitting it uses the backend default.
 The React `HostBridge` consumes typed device and transport snapshots and falls
 back to an explicit browser preview implementation.
 
-Desktop webview injection and Rust project-command routing into the React
-transport remain Phase 1 work. Hardware availability and low-latency behavior
-must still be measured on reference PCs before the full Phase 1 gate can close.
+The Rust `HostRouter` now implements the same versioned command vocabulary for
+project state, optimistic-revision mutations, persistence, device enumeration,
+and transport. Its JSON Lines mode is a development/conformance transport. The
+shared JSON Schema and TypeScript adapter test request envelopes and stable error
+codes on both sides of the future embedded webview boundary.
+
+Desktop webview injection remains Phase 1 work. Loading real project assets and
+hardware low-latency behavior must still be measured on reference PCs before the
+full Phase 1 gate can close.

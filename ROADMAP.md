@@ -29,11 +29,36 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [x] ALSA and WASAPI device adapters with stable device selection IDs
 - [x] typed React host bridge, transport snapshots, and browser preview sync
 - [x] safe Rust-to-C++ audio bridge and native device test mode
-- [ ] inject the React bridge into the desktop webview and route project commands
+- [x] versioned native-host router for project and audio commands
+- [ ] inject the native router into the desktop webview
 - [ ] measured underrun/latency suite on reference PCs
 
 Exit: open a project, play a sample without callback allocations, edit/save,
 recover autosave, and meet a measured underrun/latency budget on reference PCs.
+
+## Language incubation backlog (inactive until Phase 1 exits)
+
+This backlog records possible specialist components; it does not authorize empty
+scaffolds or add any toolchain to the default build. Every activation needs an
+ADR, named owner, dependency/license review, versioned boundary, error model,
+independent CI job, CPU/binary-size baseline, and a removal plan. See
+[`docs/LANGUAGE_MATRIX.md`](docs/LANGUAGE_MATRIX.md).
+
+- [ ] FAUST DSP pilot: one effect, generated C++ boundary, parity and benchmark
+  against a hand-written C++ reference
+- [ ] Haskell LarTycc Patterns spike producing the neutral Event Format offline
+- [ ] Prolog theory-engine spike with deterministic structured queries from Rust
+- [ ] Zig native-tool pilot only when plugin scanning/isolation begins
+- [ ] Julia research notebook promoted only after a reproducible benchmark
+- [ ] Gleam LarTycc Live protocol spike after single-user project commands mature
+- [ ] OCaml MusicScript grammar/compiler spike after the Event Format stabilizes
+- [ ] Racket LiveCode lab after MusicScript ownership and syntax are established
+- [ ] optional Lua/Wasm scripting and extension sandbox threat model
+- [ ] choose only the shader language required by the selected graphics backend;
+  WGSL is preferred if WebGPU is selected
+- [ ] optional CUDA acceleration with measured CPU feature parity and fallback
+- [ ] Nix core development shell; extended toolchains remain opt-in shells
+- [ ] SQL metadata store only for registries/indexes, never canonical project truth
 
 ## Phase 2 — Beat-making core
 

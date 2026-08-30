@@ -13,6 +13,10 @@ recorded here and pass the compatibility review described in CONTRIBUTING.md.
 | Python packages | See lockfile when generated | Per package | No | Training-only packages are not shipped in the app. |
 | miniaudio | 0.11.25 (`9634bed`) | MIT No Attribution | Built from pinned source | Device I/O only; selected from the upstream dual-license terms. |
 | `cmake`, `cc`, `find-msvc-tools`, `shlex` Rust crates | Versions pinned in `Cargo.lock` | MIT OR Apache-2.0 | Build-time only | Compile and link the native audio bridge; not shipped as runtime libraries. |
+| `serde`, `serde_json`, `itoa`, `proc-macro2`, `quote`, `serde_core`, `serde_derive`, `syn` | Versions pinned in `Cargo.lock` | MIT OR Apache-2.0 | Linked/build-time | Native-host JSON envelopes and derive support. |
+| `memchr` | Version pinned in `Cargo.lock` | Unlicense OR MIT | Linked | Transitive `serde_json` parser dependency. |
+| `unicode-ident` | Version pinned in `Cargo.lock` | (MIT OR Apache-2.0) AND Unicode-3.0 | Build-time | Transitive Rust macro identifier tables. |
+| `zmij` | Version pinned in `Cargo.lock` | MIT | Linked | Transitive `serde_json` numeric conversion dependency. |
 
 No dataset, pretrained model, audio sample, or third-party asset is bundled in
 Phase 0. A source being publicly downloadable does **not** make it suitable for
