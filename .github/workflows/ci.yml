@@ -70,8 +70,8 @@ jobs:
       - run: ruff check .
       - run: pytest
 
-  phase-zero:
-    name: Phase 0 gate
+  quality-gate:
+    name: Quality gate
     if: always()
     needs: [cpp, rust, typescript, python]
     runs-on: ubuntu-latest
