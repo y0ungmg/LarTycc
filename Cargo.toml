@@ -1,5 +1,5 @@
 [workspace]
-members = ["core", "ai-runtime"]
+members = ["core", "ai-runtime", "apps/desktop"]
 resolver = "2"
 
 [workspace.package]
@@ -14,4 +14,3 @@ unsafe_code = "forbid"
 [workspace.lints.clippy]
 all = "deny"
 pedantic = "warn"
-

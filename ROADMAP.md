@@ -3,7 +3,7 @@
 Roadmap items are gates, not date promises. A phase begins only when the prior
 phase's exit criteria are demonstrably green.
 
-## Phase 0 — Architecture and repository foundation (current)
+## Phase 0 — Architecture and repository foundation (complete)
 
 - [x] Technical Design v1 and AI/data/training documentation
 - [x] C++20, Rust, React/TypeScript, and Python component seams
@@ -16,10 +16,19 @@ Exit: clean checkout builds; all tests/lints pass; CI is green on Linux and the
 C++ smoke build is green on Windows; README, architecture, and roadmap match the
 repository; no Phase 1 behavior is implied.
 
-## Phase 1 — Playback vertical slice
+## Phase 1 — Playback vertical slice (current)
 
 Device selection, transport, clock, sample playback, one mixer path, project
 open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
+
+- [x] callback-safe transport, sample playback, seek, and master gain
+- [x] offline WAV render demo and realtime stress test
+- [x] versioned project open/save with temporary-file replacement
+- [x] command undo/redo, autosave entry point, and waveform peak job
+- [x] minimal native project host and Easy timeline prototype
+- [ ] ALSA and WASAPI device adapters with device selection
+- [ ] typed host ↔ React IPC and live transport synchronization
+- [ ] measured underrun/latency suite on reference PCs
 
 Exit: open a project, play a sample without callback allocations, edit/save,
 recover autosave, and meet a measured underrun/latency budget on reference PCs.

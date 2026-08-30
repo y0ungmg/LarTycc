@@ -10,3 +10,9 @@ version = "0.0.1"
 name = "lartycc-core"
 version = "0.0.1"
 
+[[package]]
+name = "lartycc-desktop"
+version = "0.0.1"
+dependencies = [
+ "lartycc-core",
+]
