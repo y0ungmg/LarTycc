@@ -10,7 +10,6 @@ pub enum Command {
     CreateTrack { id: EntityId, name: String },
     DeleteTrack { id: EntityId },
 }
-
 impl Command {
     /// Performs validation that is independent from the current project state.
     pub fn validate(&self) -> Result<(), CommandError> {
@@ -54,4 +53,3 @@ mod tests {
         .is_ok());
     }
 }
-

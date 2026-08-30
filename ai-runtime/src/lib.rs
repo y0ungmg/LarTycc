@@ -22,8 +22,8 @@ mod tests {
 
     #[test]
     fn tiers_have_increasing_context() {
-        assert!(default_context_tokens(ModelTier::Tiny)
-            < default_context_tokens(ModelTier::Medium));
+        assert!(
+            default_context_tokens(ModelTier::Tiny) < default_context_tokens(ModelTier::Medium)
+        );
     }
 }
-

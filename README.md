@@ -53,7 +53,7 @@ trade-offs are in [ARCHITECTURE.md](ARCHITECTURE.md). AI details are in
 ## Getting started
 
 Prerequisites: CMake 3.21+, a C++20 compiler, Rust 1.81+, Python 3.11+,
-Node.js 20+, and npm 10+.
+Node.js 22.22+ (24 LTS recommended), and npm 10+.
 
 ```bash
 git clone https://github.com/y0ungmg/LarTycc.git
@@ -97,4 +97,3 @@ Source code is licensed under [Apache License 2.0](LICENSE). Third-party
 dependencies, models, datasets, samples, and assets keep their own licenses and
 must be registered in [LICENSES.md](LICENSES.md). No training dataset or model
 weights are included in Phase 0.
-
