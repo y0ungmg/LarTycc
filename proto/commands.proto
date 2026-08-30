@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package lartycc.v1;
+
+message CommandEnvelope {
+  string command_id = 1;
+  uint64 expected_project_revision = 2;
+  oneof command {
+    SetTempo set_tempo = 10;
+    CreateTrack create_track = 11;
+  }
+}
+
+message SetTempo { double bpm = 1; }
+message CreateTrack { string track_id = 1; string name = 2; }
+

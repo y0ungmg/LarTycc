@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lartycc-ai"
+version = "0.0.1"
+description = "Offline training and evaluation tools for LarTycc"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["ai/lartycc_ai"]
+
+[tool.pytest.ini_options]
+testpaths = ["ai/tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+

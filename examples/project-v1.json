@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "projectId": "df647f65-7dd6-41bb-93c1-c77e43c81eb7",
+  "revision": 0,
+  "tempo": 145,
+  "tracks": [
+    { "id": "86d98d8f-f9eb-4f1a-ae87-83b9639d2aa4", "name": "Drums", "kind": "instrument" }
+  ]
+}
+

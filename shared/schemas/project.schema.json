@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lartycc.dev/schemas/project-v1.json",
+  "title": "LarTycc Project",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "projectId", "revision", "tempo", "tracks"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "projectId": { "type": "string", "format": "uuid" },
+    "revision": { "type": "integer", "minimum": 0 },
+    "tempo": { "type": "number", "minimum": 20, "maximum": 400 },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["audio", "instrument", "midi", "bus"] }
+        }
+      }
+    }
+  }
+}
+
