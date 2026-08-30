@@ -1,4 +1,4 @@
-//! Application-domain core for LarTycc.
+//! Application-domain core for `LarTycc`.
 
 /// Stable identifier used at command and persistence boundaries.
 pub type EntityId = u128;
@@ -12,6 +12,10 @@ pub enum Command {
 }
 impl Command {
     /// Performs validation that is independent from the current project state.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`CommandError`] when a value violates a command-level invariant.
     pub fn validate(&self) -> Result<(), CommandError> {
         match self {
             Self::SetTempo { bpm } if !(20.0..=400.0).contains(bpm) => {
