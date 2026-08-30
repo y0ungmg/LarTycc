@@ -10,7 +10,7 @@ button { color: inherit; font: inherit; }
 .transport button, .mode { border: 1px solid #393241; background: #18151d; border-radius: 10px; padding: 10px 14px; cursor: pointer; }
 .transport button.active { color: #0b0810; background: #b48aff; border-color: #b48aff; }
 .transport strong { margin-left: 14px; font-variant-numeric: tabular-nums; }
-.mode { justify-self: end; font-size: 12px; }
+.topbar select { justify-self: end; max-width: 260px; color: #f7f5fb; background: #18151d; border: 1px solid #393241; border-radius: 9px; padding: 9px 12px; }
 .workspace { min-height: calc(100vh - 168px); display: grid; grid-template-columns: 180px 1fr; }
 aside { padding: 22px 14px; border-right: 1px solid #2d2933; }
 aside .label { padding: 0 10px 12px; }

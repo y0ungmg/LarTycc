@@ -14,3 +14,21 @@ message CommandEnvelope {
 message SetTempo { double bpm = 1; }
 message CreateTrack { string track_id = 1; string name = 2; }
 
+message AudioDeviceInfo {
+  string id = 1;
+  string name = 2;
+  bool is_default = 3;
+}
+
+message TransportSnapshot {
+  bool playing = 1;
+  uint64 position_frames = 2;
+  uint32 sample_rate = 3;
+  uint64 callback_count = 4;
+}
+
+message StartTransport {
+  string device_id = 1;
+  uint32 sample_rate = 2;
+  uint32 period_frames = 3;
+}

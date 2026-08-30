@@ -11,7 +11,8 @@ a chat panel glued to a sequencer: it proposes validated project commands,
 shows an audible/visual preview, and only mutates the project after approval.
 Every applied proposal participates in the same undo/redo history as manual UI
 edits. The repository is in **pre-alpha Phase 1**. A headless engine can render
-a sample through the master path; hardware audio and native UI wiring are next.
+a sample through the master path; WASAPI/ALSA device output and a typed React
+bridge now exist, while native bridge injection is the next integration seam.
 
 ## Product principles
 

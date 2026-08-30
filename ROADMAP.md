@@ -26,8 +26,9 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [x] versioned project open/save with temporary-file replacement
 - [x] command undo/redo, autosave entry point, and waveform peak job
 - [x] minimal native project host and Easy timeline prototype
-- [ ] ALSA and WASAPI device adapters with device selection
-- [ ] typed host ↔ React IPC and live transport synchronization
+- [x] ALSA and WASAPI device adapters with stable device selection IDs
+- [x] typed React host bridge, transport snapshots, and browser preview sync
+- [ ] inject the native bridge and connect Rust project commands to C++ transport
 - [ ] measured underrun/latency suite on reference PCs
 
 Exit: open a project, play a sample without callback allocations, edit/save,
