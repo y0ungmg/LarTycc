@@ -1,0 +1,12 @@
+{
+  "name": "lartycc-workspace",
+  "private": true,
+  "packageManager": "npm@10.8.2",
+  "engines": { "node": ">=22.22" },
+  "scripts": {
+    "build": "npm --workspace @lartycc/ui run build",
+    "lint": "npm --workspace @lartycc/ui run lint",
+    "test": "npm --workspace @lartycc/ui run test"
+  },
+  "workspaces": ["ui"]
+}

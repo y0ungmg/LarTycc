@@ -1,0 +1,17 @@
+add_library(lartycc_audio STATIC src/audio_engine.cpp)
+add_library(LarTycc::Audio ALIAS lartycc_audio)
+target_include_directories(lartycc_audio PUBLIC include)
+target_compile_features(lartycc_audio PUBLIC cxx_std_20)
+set_target_properties(lartycc_audio PROPERTIES CXX_EXTENSIONS OFF)
+
+if(MSVC)
+  target_compile_options(lartycc_audio PRIVATE /W4 /permissive-)
+else()
+  target_compile_options(lartycc_audio PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
+
+if(LARTYCC_BUILD_TESTS)
+  add_executable(audio_engine_tests tests/audio_engine_test.cpp)
+  target_link_libraries(audio_engine_tests PRIVATE LarTycc::Audio)
+  add_test(NAME audio_engine_tests COMMAND audio_engine_tests)
+endif()
