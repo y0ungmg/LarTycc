@@ -1,0 +1,17 @@
+[package]
+name = "lartycc-desktop"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "lartycc"
+path = "src/main.rs"
+
+[dependencies]
+lartycc-core = { path = "../../core" }
+
+[lints]
+workspace = true
+

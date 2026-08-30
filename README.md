@@ -10,7 +10,8 @@ LarTycc is an experimental, local-first DAW for Linux and Windows. Its AI is not
 a chat panel glued to a sequencer: it proposes validated project commands,
 shows an audible/visual preview, and only mutates the project after approval.
 Every applied proposal participates in the same undo/redo history as manual UI
-edits. The repository is in **pre-alpha Phase 0**; it does not produce audio yet.
+edits. The repository is in **pre-alpha Phase 1**. A headless engine can render
+a sample through the master path; hardware audio and native UI wiring are next.
 
 ## Product principles
 
@@ -85,9 +86,10 @@ mockup is presented as a working product.
 
 ## Status and scope
 
-Phase 0 provides the architecture, repository boundaries, compilable component
-seams, basic tests, and CI. Audio playback, editing, inference, plugins, model
-training, pitch correction, and collaboration are intentionally deferred. See
+Phase 0 is complete. Phase 1 currently provides project persistence, undo/redo,
+autosave, waveform reduction, a transport/sample engine, offline WAV demo, and
+Easy timeline prototype. Hardware audio, inference, plugins, model training,
+pitch correction, and collaboration remain deferred. See
 [ROADMAP.md](ROADMAP.md) for gates and [CONTRIBUTING.md](CONTRIBUTING.md) before
 opening a pull request.
 
