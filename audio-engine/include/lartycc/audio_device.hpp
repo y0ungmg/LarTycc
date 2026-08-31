@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "lartycc/realtime_metrics.hpp"
+
 namespace lartycc::audio {
 
 class AudioEngine;
@@ -20,6 +22,7 @@ struct AudioDeviceConfig {
   unsigned int sample_rate{48'000};
   unsigned int channels{2};
   unsigned int period_frames{128};
+  bool measure_timing{false};
 };
 
 class AudioOutput final {
@@ -37,6 +40,7 @@ class AudioOutput final {
   void stop() noexcept;
   [[nodiscard]] bool is_running() const noexcept;
   [[nodiscard]] std::size_t callback_count() const noexcept;
+  [[nodiscard]] RealtimeMetricsSnapshot timing_metrics() const noexcept;
 
  private:
   class Impl;

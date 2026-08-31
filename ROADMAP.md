@@ -32,6 +32,8 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [x] versioned native-host router for project and audio commands
 - [x] inject the native router into a WebKitGTK/WebView2 desktop shell
 - [ ] measured underrun/latency suite on reference PCs
+  - [x] opt-in callback probe, versioned report schema, and qualification matrix
+  - [ ] accepted physical Linux and Windows reports with wired loopback latency
 
 Exit: open a project, play a sample without callback allocations, edit/save,
 recover autosave, and meet a measured underrun/latency budget on reference PCs.

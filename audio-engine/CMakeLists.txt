@@ -37,7 +37,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(miniaudio)
 
-add_library(lartycc_audio_device STATIC src/audio_device.cpp)
+add_library(lartycc_audio_device STATIC src/audio_device.cpp src/realtime_metrics.cpp)
 add_library(LarTycc::AudioDevice ALIAS lartycc_audio_device)
 target_include_directories(lartycc_audio_device PUBLIC include)
 target_compile_features(lartycc_audio_device PUBLIC cxx_std_20)
@@ -64,6 +64,9 @@ endif()
 add_executable(lartycc_render_demo tools/render_demo.cpp)
 target_link_libraries(lartycc_render_demo PRIVATE LarTycc::Audio)
 
+add_executable(lartycc_latency_probe tools/latency_probe.cpp)
+target_link_libraries(lartycc_latency_probe PRIVATE LarTycc::AudioDevice)
+
 if(LARTYCC_BUILD_TESTS)
   add_executable(audio_engine_tests tests/audio_engine_test.cpp)
   target_link_libraries(audio_engine_tests PRIVATE LarTycc::Audio)
@@ -71,6 +74,9 @@ if(LARTYCC_BUILD_TESTS)
   add_executable(realtime_stress_test tests/realtime_stress_test.cpp)
   target_link_libraries(realtime_stress_test PRIVATE LarTycc::Audio)
   add_test(NAME realtime_stress_test COMMAND realtime_stress_test)
+  add_executable(realtime_metrics_test tests/realtime_metrics_test.cpp)
+  target_link_libraries(realtime_metrics_test PRIVATE LarTycc::AudioDevice)
+  add_test(NAME realtime_metrics_test COMMAND realtime_metrics_test)
   add_executable(audio_device_tests tests/audio_device_test.cpp)
   target_link_libraries(audio_device_tests PRIVATE LarTycc::AudioDevice)
   add_test(NAME audio_device_tests COMMAND audio_device_tests)
@@ -79,7 +85,8 @@ if(LARTYCC_BUILD_TESTS)
   add_test(NAME audio_host_c_tests COMMAND audio_host_c_tests)
 endif()
 
-install(TARGETS lartycc_audio lartycc_audio_device lartycc_audio_c miniaudio
+install(TARGETS lartycc_audio lartycc_audio_device lartycc_audio_c
+                lartycc_latency_probe miniaudio
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin)

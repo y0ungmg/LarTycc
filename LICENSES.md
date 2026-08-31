@@ -23,6 +23,10 @@ recorded here and pass the compatibility review described in CONTRIBUTING.md.
 | Microsoft Edge WebView2 Runtime | Evergreen system runtime | Microsoft license | No | Provided by Windows; LarTycc does not redistribute the runtime in this phase. |
 | Desktop webview transitive Rust crates | Exact versions in `apps/desktop-webview/Cargo.lock` | Per crate | Optional | Separate lockfile and CI keep this graph out of the core workspace. |
 
+The realtime qualification harness uses only the C++ standard library and the
+already registered miniaudio device boundary; it introduces no new third-party
+dependency.
+
 No dataset, pretrained model, audio sample, or third-party asset is bundled in
 Phase 0. A source being publicly downloadable does **not** make it suitable for
 training or redistribution.

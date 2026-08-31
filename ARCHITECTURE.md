@@ -132,7 +132,8 @@ uses epochs so memory is never freed while a callback can reference it.
 
 - no allocation/deallocation, file/network I/O, logging, exceptions, ML, or UI;
 - no mutexes, condition variables, unbounded loops, or ref-count destruction;
-- no system clock queries; use host sample position;
+- no system clock queries in normal playback; the explicit qualification mode
+  may timestamp callbacks and must remain disabled in production sessions;
 - bounded lock-free SPSC queues only; define overflow policy per message class;
 - denormal protection, finite-value validation, precomputed coefficients;
 - plugin calls get deadlines and later move behind crash/sandbox isolation;
