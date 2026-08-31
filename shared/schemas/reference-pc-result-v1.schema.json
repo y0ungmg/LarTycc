@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lartycc.dev/schemas/reference-pc-result-v1.schema.json",
+  "title": "LarTycc reference PC result v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "recorded_at", "system", "audio", "build", "profiles", "loopback"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "recorded_at": { "type": "string", "format": "date-time" },
+    "system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment", "os", "os_version", "cpu", "ram_gib", "power_profile"],
+      "properties": {
+        "environment": { "const": "physical" },
+        "os": { "enum": ["linux", "windows"] },
+        "os_version": { "type": "string", "minLength": 1 },
+        "cpu": { "type": "string", "minLength": 1 },
+        "ram_gib": { "type": "number", "exclusiveMinimum": 0 },
+        "power_profile": { "type": "string", "minLength": 1 }
+      }
+    },
+    "audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interface", "connection", "backend", "driver_version"],
+      "properties": {
+        "interface": { "type": "string", "minLength": 1 },
+        "connection": { "type": "string", "minLength": 1 },
+        "backend": { "enum": ["alsa", "wasapi"] },
+        "driver_version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["commit", "build_type"],
+      "properties": {
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "build_type": { "const": "Release" }
+      }
+    },
+    "profiles": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "report", "sha256"],
+        "properties": {
+          "name": { "enum": ["safe", "interactive", "aggressive"] },
+          "report": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    },
+    "loopback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "sample_count", "median_ms", "p95_ms"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "sample_count": { "type": "integer", "minimum": 10 },
+        "median_ms": { "type": "number", "exclusiveMinimum": 0 },
+        "p95_ms": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

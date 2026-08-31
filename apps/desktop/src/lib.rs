@@ -454,5 +454,12 @@ mod tests {
             include_str!("../../../shared/schemas/realtime-qualification-v1.schema.json");
         let parsed: Value = serde_json::from_str(qualification).expect("qualification schema");
         assert_eq!(parsed["properties"]["schema_version"]["const"], 1);
+
+        let reference = include_str!("../../../shared/schemas/reference-pc-result-v1.schema.json");
+        let parsed: Value = serde_json::from_str(reference).expect("reference PC schema");
+        assert_eq!(
+            parsed["properties"]["system"]["properties"]["environment"]["const"],
+            "physical"
+        );
     }
 }

@@ -1,0 +1,53 @@
+name: Realtime reference-PC result
+description: Submit a physical Linux or Windows Phase 1 qualification bundle
+title: "[Realtime qualification]: "
+labels: ["performance", "phase-1"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CI and virtual-machine measurements do not qualify. Run both required profiles for 600 seconds and attach a bundle accepted by `scripts/validate_qualification_bundle.py`.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Linux, Windows]
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: Tested commit
+      description: Full 40-character Git SHA from the Release build
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Hardware and driver
+      description: CPU, RAM, audio interface, connection, OS build, backend, driver version and power profile
+    validations:
+      required: true
+  - type: textarea
+    id: bundle
+    attributes:
+      label: Qualification bundle
+      description: Attach the manifest and probe JSON files, then paste the validator output
+    validations:
+      required: true
+  - type: textarea
+    id: loopback
+    attributes:
+      label: Wired loopback measurement
+      description: Method, sample count, median latency and p95 latency
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Confirmation
+      options:
+        - label: This run used a physical machine, Release build and AC power.
+          required: true
+        - label: Safe and interactive profiles ran for at least 600 seconds with zero deadline misses.
+          required: true
