@@ -34,6 +34,7 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [ ] measured underrun/latency suite on reference PCs
   - [x] opt-in callback probe, versioned report schema, and qualification matrix
   - [x] reference-result manifest, integrity validator, and submission template
+  - [x] atomic cross-platform collector for required reference profiles
   - [ ] accepted physical Linux and Windows reports with wired loopback latency
 
 Exit: open a project, play a sample without callback allocations, edit/save,

@@ -70,3 +70,27 @@ python scripts/validate_qualification_bundle.py path/to/manifest.json
 Submit the validated files through the **Realtime reference-PC result** GitHub
 issue template. A reviewer must reproduce the hash validation before accepting
 the result into `docs/performance/results/`.
+
+## Automated bundle collection
+
+After measuring wired loopback, the cross-platform runner executes both required
+10-minute profiles, writes reports through a temporary directory, computes their
+hashes, creates the manifest, validates it and only then publishes the requested
+output directory:
+
+```bash
+python scripts/run_qualification_bundle.py \
+  --probe build/release/audio-engine/lartycc_latency_probe \
+  --output-dir qualification-linux \
+  --commit FULL_40_CHARACTER_GIT_SHA --os linux \
+  --os-version "OS version" --cpu "CPU model" --ram-gib 16 \
+  --power-profile performance --interface "Interface model" \
+  --connection USB --driver-version "Driver version" \
+  --device DEVICE_ID --loopback-method "wired output to input" \
+  --loopback-sample-count 20 --loopback-median-ms 8.2 \
+  --loopback-p95-ms 9.1
+```
+
+Use the Windows probe executable path and `--os windows` on Windows. Add
+`--include-aggressive` to collect the optional 64-frame profile. The runner
+refuses to overwrite an existing output directory.
