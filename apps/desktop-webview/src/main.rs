@@ -157,5 +157,5 @@ fn response(status: StatusCode, mime: &'static str, body: Vec<u8>) -> Response<C
             "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
         )
         .body(Cow::Owned(body))
-        .unwrap_or_else(|_| Response::new(Cow::Borrowed(b"response build failed")))
+        .unwrap_or_else(|_| Response::new(Cow::Owned(b"response build failed".to_vec())))
 }
