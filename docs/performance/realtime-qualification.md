@@ -58,3 +58,15 @@ Validate the report against
 under `docs/performance/results/` with the machine metadata and loopback method.
 The roadmap checkbox remains open until all required rows and both operating
 systems have accepted reports.
+
+Bundle the two required reports with a manifest conforming to
+`shared/schemas/reference-pc-result-v1.schema.json`, then verify paths, hashes,
+profile settings and physical-machine metadata:
+
+```bash
+python scripts/validate_qualification_bundle.py path/to/manifest.json
+```
+
+Submit the validated files through the **Realtime reference-PC result** GitHub
+issue template. A reviewer must reproduce the hash validation before accepting
+the result into `docs/performance/results/`.
