@@ -26,6 +26,7 @@ recorded here and pass the compatibility review described in CONTRIBUTING.md.
 The realtime qualification harness uses only the C++ standard library and the
 already registered miniaudio device boundary; it introduces no new third-party
 dependency. Its bundle validator uses only the Python standard library.
+The automated bundle collector is also standard-library-only.
 
 No dataset, pretrained model, audio sample, or third-party asset is bundled in
 Phase 0. A source being publicly downloadable does **not** make it suitable for
