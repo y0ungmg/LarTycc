@@ -38,6 +38,10 @@ versions and commands fail closed.
 `audio.loadTestTone` is a Phase 1 integration fixture, not a project-file model.
 Loading real project assets remains a separate playback-slice requirement.
 
+The optional `apps/desktop-webview` shell provides the in-process adapter. Its
+initialization script exposes `window.lartyccHost`, passes each envelope to the
+same router, and publishes returned transport snapshots to React listeners.
+
 ## Limits and evolution
 
 The protocol is process-local and does not authenticate remote clients. A future

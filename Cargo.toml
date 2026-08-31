@@ -1,5 +1,6 @@
 [workspace]
 members = ["core", "ai-runtime", "audio-bridge", "apps/desktop"]
+exclude = ["apps/desktop-webview"]
 resolver = "2"
 
 [workspace.package]

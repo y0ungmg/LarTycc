@@ -53,6 +53,7 @@ trade-offs are in [ARCHITECTURE.md](ARCHITECTURE.md). AI details are in
 | `proto/` | versioned cross-process message contracts | Protobuf |
 | `shared/schemas/` | persisted interchange schemas | JSON Schema |
 | `apps/desktop/` | native host, versioned command router, packaging | Rust |
+| `apps/desktop-webview/` | optional native WebKitGTK/WebView2 window | Rust |
 
 ## Getting started
 
@@ -88,6 +89,10 @@ cargo run -p lartycc-desktop -- --list-devices
 cargo run -p lartycc-desktop -- --play-test [device-id]
 printf '%s\n' '{"version":1,"id":"state","command":"host.getState"}' \
   | cargo run -p lartycc-desktop -- --host-stdio demo-project.json
+
+npm run build
+cargo run --manifest-path apps/desktop-webview/Cargo.toml -- \
+  demo-project.json ui/dist
 ```
 
 The host protocol is defined by

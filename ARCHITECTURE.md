@@ -323,6 +323,7 @@ machines will replace estimates before any model release.
 ```text
 LarTycc/
 ├── apps/desktop/       # native host
+├── apps/desktop-webview/ # optional WebKitGTK/WebView2 shell, separate workspace
 ├── core/               # Rust project/command core
 ├── audio-bridge/       # safe Rust wrapper over the native C ABI
 ├── audio-engine/       # C++20 realtime DSP
