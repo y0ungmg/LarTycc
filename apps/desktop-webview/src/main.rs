@@ -39,7 +39,7 @@ fn run(project_path: &Path, ui_dist: Option<&Path>) -> Result<(), Box<dyn Error>
     let proxy = event_loop.create_proxy();
     let builder = WebViewBuilder::new()
         .with_custom_protocol(APP_SCHEME.to_owned(), move |_webview_id, request| {
-            asset_response(&asset_root, request)
+            asset_response(&asset_root, &request)
         })
         .with_initialization_script(INITIALIZATION_SCRIPT)
         .with_ipc_handler(move |request: Request<String>| {
@@ -50,7 +50,7 @@ fn run(project_path: &Path, ui_dist: Option<&Path>) -> Result<(), Box<dyn Error>
             };
             let _ = proxy.send_event(UserEvent::Invoke(body));
         })
-        .with_navigation_handler(is_app_url)
+        .with_navigation_handler(|url| is_app_url(&url))
         .with_new_window_req_handler(|_, _| NewWindowResponse::Deny)
         .with_download_started_handler(|_, _| false)
         .with_clipboard(false)
@@ -109,11 +109,11 @@ fn locate_assets(explicit: Option<&Path>) -> Result<PathBuf, Box<dyn Error>> {
     Ok(canonical)
 }
 
-fn is_app_url(url: String) -> bool {
+fn is_app_url(url: &str) -> bool {
     url.starts_with("lartycc://localhost/") || url.starts_with("http://lartycc.localhost/")
 }
 
-fn asset_response(root: &Path, request: Request<Vec<u8>>) -> Response<Cow<'static, [u8]>> {
+fn asset_response(root: &Path, request: &Request<Vec<u8>>) -> Response<Cow<'static, [u8]>> {
     let Some(relative) = asset_relative_path(request.uri().path()) else {
         return response(
             StatusCode::BAD_REQUEST,
