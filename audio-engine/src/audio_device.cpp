@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <chrono>
 #include <cstddef>
 #include <cstring>
 #include <span>
@@ -15,6 +16,14 @@
 
 namespace lartycc::audio {
 namespace {
+
+static_assert(std::atomic<std::uint64_t>::is_always_lock_free);
+
+std::uint64_t monotonic_nanoseconds() noexcept {
+  const auto elapsed = std::chrono::steady_clock::now().time_since_epoch();
+  return static_cast<std::uint64_t>(
+      std::chrono::duration_cast<std::chrono::nanoseconds>(elapsed).count());
+}
 
 std::string encode_id(const ma_device_id& id) {
   constexpr auto digits = std::string_view{"0123456789abcdef"};
@@ -91,6 +100,9 @@ class AudioOutput::Impl final {
 
     channels_ = requested.channels;
     sample_rate_ = requested.sample_rate;
+    measure_timing_ = requested.measure_timing;
+    callback_count_.store(0, std::memory_order_relaxed);
+    timing_metrics_.reset();
     if (ma_device_init(&context_, &config, &device_) != MA_SUCCESS) return false;
     device_ready_ = true;
     if (ma_device_start(&device_) != MA_SUCCESS) {
@@ -112,11 +124,16 @@ class AudioOutput::Impl final {
 
   static void data_callback(ma_device* device, void* output, const void*, ma_uint32 frames) {
     auto* self = static_cast<Impl*>(device->pUserData);
+    const auto started = self->measure_timing_ ? monotonic_nanoseconds() : 0;
     auto samples = std::span{static_cast<float*>(output),
                              static_cast<std::size_t>(frames) * self->channels_};
     self->engine_.process({static_cast<double>(self->sample_rate_), frames, self->channels_},
                           samples);
     self->callback_count_.fetch_add(1, std::memory_order_relaxed);
+    if (self->measure_timing_) {
+      self->timing_metrics_.record(started, monotonic_nanoseconds(), frames,
+                                   self->sample_rate_);
+    }
   }
 
   AudioEngine& engine_;
@@ -128,6 +145,8 @@ class AudioOutput::Impl final {
   unsigned int sample_rate_{48'000};
   std::atomic<bool> running_{false};
   std::atomic<std::size_t> callback_count_{0};
+  bool measure_timing_{false};
+  RealtimeMetrics timing_metrics_;
 };
 
 AudioOutput::AudioOutput(AudioEngine& engine) : impl_(std::make_unique<Impl>(engine)) {}
@@ -143,6 +162,9 @@ bool AudioOutput::is_running() const noexcept {
 }
 std::size_t AudioOutput::callback_count() const noexcept {
   return impl_->callback_count_.load(std::memory_order_relaxed);
+}
+RealtimeMetricsSnapshot AudioOutput::timing_metrics() const noexcept {
+  return impl_->timing_metrics_.snapshot();
 }
 
 }  // namespace lartycc::audio

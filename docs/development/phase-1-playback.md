@@ -47,6 +47,12 @@ shared JSON Schema and TypeScript adapter test request envelopes and stable erro
 codes on both sides of the future embedded webview boundary.
 
 The Wry/Tao shell injects that adapter into a real WebKitGTK or WebView2 window
-while remaining outside the core Cargo workspace. Loading real project assets
-and hardware low-latency behavior must still be measured on reference PCs before
-the full Phase 1 gate can close.
+while remaining outside the core Cargo workspace.
+
+The opt-in `lartycc_latency_probe` now produces versioned callback timing
+reports without adding clock reads to normal playback. The qualification matrix
+and the distinction between nominal buffer duration and wired round-trip
+latency are defined in
+[`../performance/realtime-qualification.md`](../performance/realtime-qualification.md).
+Physical Linux and Windows results are still required before the Phase 1 gate
+can close.

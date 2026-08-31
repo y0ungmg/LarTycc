@@ -449,5 +449,10 @@ mod tests {
             parsed["$defs"]["request"]["properties"]["version"]["const"],
             1
         );
+
+        let qualification =
+            include_str!("../../../shared/schemas/realtime-qualification-v1.schema.json");
+        let parsed: Value = serde_json::from_str(qualification).expect("qualification schema");
+        assert_eq!(parsed["properties"]["schema_version"]["const"], 1);
     }
 }

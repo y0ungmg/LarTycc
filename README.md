@@ -12,8 +12,8 @@ shows an audible/visual preview, and only mutates the project after approval.
 Every applied proposal participates in the same undo/redo history as manual UI
 edits. The repository is in **pre-alpha Phase 1**. A headless engine can render
 a sample through the master path; WASAPI/ALSA output, a stable Rust-to-C++ audio
-bridge, and a typed React bridge now exist. Desktop webview injection is the
-next integration seam.
+bridge, a typed React bridge, and the desktop webview shell now exist.
+Reference-PC realtime qualification is the remaining Phase 1 gate.
 
 ## Product principles
 
@@ -93,10 +93,15 @@ printf '%s\n' '{"version":1,"id":"state","command":"host.getState"}' \
 npm run build
 cargo run --manifest-path apps/desktop-webview/Cargo.toml -- \
   demo-project.json ui/dist
+
+./build/cpp/audio-engine/lartycc_latency_probe --seconds 30 \
+  --period-frames 128 --max-deadline-misses 0
 ```
 
 The host protocol is defined by
 [`shared/schemas/host-protocol-v1.schema.json`](shared/schemas/host-protocol-v1.schema.json).
+The physical playback procedure and versioned report format are documented in
+[`docs/performance/realtime-qualification.md`](docs/performance/realtime-qualification.md).
 The current and proposed language ownership map is documented in
 [`docs/LANGUAGE_MATRIX.md`](docs/LANGUAGE_MATRIX.md); incubation languages are
 not part of the default build.
@@ -110,8 +115,8 @@ mockup is presented as a working product.
 
 Phase 0 is complete. Phase 1 currently provides project persistence, undo/redo,
 autosave, waveform reduction, a transport/sample engine, offline WAV demo,
-native playback bridge, and Easy timeline prototype. Hardware latency
-qualification, inference, plugins, model training, pitch correction, and
+native playback bridge, and Easy timeline prototype. Hardware qualification
+results, inference, plugins, model training, pitch correction, and
 collaboration remain deferred. See
 [ROADMAP.md](ROADMAP.md) for gates and [CONTRIBUTING.md](CONTRIBUTING.md) before
 opening a pull request.
