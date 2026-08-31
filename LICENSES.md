@@ -17,6 +17,11 @@ recorded here and pass the compatibility review described in CONTRIBUTING.md.
 | `memchr` | Version pinned in `Cargo.lock` | Unlicense OR MIT | Linked | Transitive `serde_json` parser dependency. |
 | `unicode-ident` | Version pinned in `Cargo.lock` | (MIT OR Apache-2.0) AND Unicode-3.0 | Build-time | Transitive Rust macro identifier tables. |
 | `zmij` | Version pinned in `Cargo.lock` | MIT | Linked | Transitive `serde_json` numeric conversion dependency. |
+| Wry | 0.56.1 | Apache-2.0 OR MIT | Linked in optional desktop shell | OS webview wrapper; isolated in `apps/desktop-webview/Cargo.lock`. |
+| Tao | 0.36.0 | Apache-2.0 | Linked in optional desktop shell | Cross-platform native window/event loop. |
+| WebKitGTK | System 4.1 API | LGPL-2.1-or-later | No | Dynamically provided by Linux; required only for the optional desktop shell. |
+| Microsoft Edge WebView2 Runtime | Evergreen system runtime | Microsoft license | No | Provided by Windows; LarTycc does not redistribute the runtime in this phase. |
+| Desktop webview transitive Rust crates | Exact versions in `apps/desktop-webview/Cargo.lock` | Per crate | Optional | Separate lockfile and CI keep this graph out of the core workspace. |
 
 No dataset, pretrained model, audio sample, or third-party asset is bundled in
 Phase 0. A source being publicly downloadable does **not** make it suitable for

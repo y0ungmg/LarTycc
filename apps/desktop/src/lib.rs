@@ -9,6 +9,8 @@ use std::f32::consts::TAU;
 use std::fmt::{Display, Formatter};
 use std::path::PathBuf;
 
+pub mod webview_contract;
+
 pub const HOST_PROTOCOL_VERSION: u32 = 1;
 const DEFAULT_SAMPLE_RATE: u32 = 48_000;
 const DEFAULT_PERIOD_FRAMES: u32 = 128;

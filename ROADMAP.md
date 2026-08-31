@@ -30,7 +30,7 @@ open/save, minimal desktop host, waveform job, and an Easy-mode timeline.
 - [x] typed React host bridge, transport snapshots, and browser preview sync
 - [x] safe Rust-to-C++ audio bridge and native device test mode
 - [x] versioned native-host router for project and audio commands
-- [ ] inject the native router into the desktop webview
+- [x] inject the native router into a WebKitGTK/WebView2 desktop shell
 - [ ] measured underrun/latency suite on reference PCs
 
 Exit: open a project, play a sample without callback allocations, edit/save,

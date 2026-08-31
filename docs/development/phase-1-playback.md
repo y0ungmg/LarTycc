@@ -12,6 +12,8 @@ cargo run -p lartycc-desktop -- --list-devices
 cargo run -p lartycc-desktop -- --play-test [device-id]
 printf '%s\n' '{"version":1,"id":"state","command":"host.getState"}' \
   | cargo run -p lartycc-desktop -- --host-stdio demo-project.json
+npm run build
+cargo run --manifest-path apps/desktop-webview/Cargo.toml -- demo-project.json ui/dist
 ```
 
 The renderer creates `lartycc-demo.wav`: one second of a generated mono sample
@@ -44,6 +46,7 @@ and transport. Its JSON Lines mode is a development/conformance transport. The
 shared JSON Schema and TypeScript adapter test request envelopes and stable error
 codes on both sides of the future embedded webview boundary.
 
-Desktop webview injection remains Phase 1 work. Loading real project assets and
-hardware low-latency behavior must still be measured on reference PCs before the
-full Phase 1 gate can close.
+The Wry/Tao shell injects that adapter into a real WebKitGTK or WebView2 window
+while remaining outside the core Cargo workspace. Loading real project assets
+and hardware low-latency behavior must still be measured on reference PCs before
+the full Phase 1 gate can close.
